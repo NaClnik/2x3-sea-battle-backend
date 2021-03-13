@@ -4,10 +4,21 @@
 namespace Core\Reflection;
 
 // TODO: Подумать над переименованием класса.
+use Core\Models\Route;
 use ReflectionClass;
+use ReflectionMethod;
 
 class ReflectionHandler
 {
+    // Поля класса.
+    private Route $route;
+
+    // Конструктор.
+    public function __construct(Route $route)
+    {
+        $this->route = $route;
+    } // __construct.
+
     // TODO: Сделать обработку исключений.
     // TODO: Сделать декомпозицию метода.
     public function getDataFromController(string $controllerName, string $actionName)
@@ -21,6 +32,13 @@ class ReflectionHandler
 
         return $reflectionAction->invoke($controller);
     } // getDataFromController.
+
+    // TODO: Подумать над переименованием метода.
+    public function getArgumentsForMethodFromRoute(ReflectionMethod $reflectionMethod): array
+    {
+        // TODO: Реализовать метод.
+        return [];
+    } // getArgumentsForMethodFromRoute.
 
     // Рекурсивный метод для Dependency Injection в контроллерах.
     // TODO: Обработать исключения.

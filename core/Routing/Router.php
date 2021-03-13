@@ -82,14 +82,14 @@ class Router
         $matchedRoute = $this->getMatchedRoute();
 
         // Создать хэндлер для рефлексии.
-        $reflectionHandler = new ReflectionHandler();
+        $reflectionHandler = new ReflectionHandler($matchedRoute);
 
         // Получить данные из метода контроллера, связанного с маршрутом.
         return $reflectionHandler->getDataFromController($matchedRoute->getControllerName(), $matchedRoute->getActionName());
     } // executeRoute.
 
     // Получить маршрут, который совпадает с определённым маршрутом в ApiRouteDefiner.
-    private function getMatchedRoute(): Route
+    private function getMatchedRoute(): RouteWithController
     {
         // Получить все роуты, определённые в ApiRouteDefiner.
         $routesCollection = $this->routesCollection->getRoutes();
