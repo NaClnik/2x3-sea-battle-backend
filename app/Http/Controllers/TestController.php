@@ -4,7 +4,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Services\TestService;
+use App\Services\Test\TestService;
 
 class TestController
 {

@@ -19,8 +19,7 @@ class ReflectionHandler
 
         $reflectionAction = $reflectionController->getMethod($actionName);
 
-        $data = $reflectionAction->invoke($controller);
-        var_dump($data);
+        return $reflectionAction->invoke($controller);
     } // getDataFromController.
 
     // Рекурсивный метод для Dependency Injection в контроллерах.
@@ -32,6 +31,10 @@ class ReflectionHandler
 
         // Получение конструктора класса для рефлексии.
         $reflectionConstructor = $reflectionClass->getConstructor();
+
+        if(!$reflectionConstructor){
+            return $reflectionClass->newInstance();
+        } // if.
 
         // Получение парааметров конструктора для рефлексии.
         $reflectionParameters = $reflectionConstructor->getParameters();

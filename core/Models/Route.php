@@ -3,27 +3,22 @@
 
 namespace Core\Models;
 
-// Класс, описывающий маршрут.
+
 class Route
 {
     // Поля класса.
-    private string $route;
-    private string $method;
-    private string $controllerName;
-    private string $actionName;
+    protected string $route;
+    protected string $method;
 
     // Конструктор.
-    public function __construct(string $route, string $method, string $controllerName, string $actionName)
+    public function __construct(string $route, string $method)
     {
         $this->route = $route;
         $this->method = $method;
-        $this->controllerName = $controllerName;
-        $this->actionName = $actionName;
     } // __construct.
 
     #region Аксессоры класса
     // Аксессоры класса.
-
     /**
      * @return string
      */
@@ -55,37 +50,5 @@ class Route
     {
         $this->method = $method;
     }
-
-    /**
-     * @return string
-     */
-    public function getControllerName(): string
-    {
-        return $this->controllerName;
-    }
-
-    /**
-     * @param string $controllerName
-     */
-    public function setControllerName(string $controllerName): void
-    {
-        $this->controllerName = $controllerName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getActionName(): string
-    {
-        return $this->actionName;
-    }
-
-    /**
-     * @param string $actionName
-     */
-    public function setActionName(string $actionName): void
-    {
-        $this->actionName = $actionName;
-    } // __construct.
     #endregion
 } // Route.

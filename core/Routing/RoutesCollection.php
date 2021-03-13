@@ -5,7 +5,7 @@ namespace Core\Routing;
 
 
 // Класс для определения маршрутов приложения.
-use Core\Models\Route;
+use Core\Models\RouteWithController;
 
 class RoutesCollection
 {
@@ -31,11 +31,11 @@ class RoutesCollection
     // TODO: Сократить код.
     public function get(string $route, string $controllerName, string $actionName)
     {
-        array_push($this->routes, new Route($route, 'get', $controllerName, $actionName));
+        array_push($this->routes, new RouteWithController($route, 'GET', $controllerName, $actionName));
     } // get.
 
     public function post(string $route, string $controllerName, string $actionName)
     {
-        array_push($this->routes, new Route($route, 'post', $controllerName, $actionName));
+        array_push($this->routes, new RouteWithController($route, 'POST', $controllerName, $actionName));
     } // get.
 } // RoutesCollection.

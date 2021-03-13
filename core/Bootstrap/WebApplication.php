@@ -5,18 +5,20 @@ namespace Core\Bootstrap;
 
 
 use App\Routes\ApiRouteDefiner;
-use Core\Abstracts\RouteDefiner;
-use Core\Routing\Router;
-use Core\Routing\RoutesCollection;
+use Core\Defaults\DefaultUriMatchValidator;
+use Core\Routing\RouterBuilder;
 
 class WebApplication
 {
     // Методы класса.
     public function run(): void{
-        $routeDefiner = new ApiRouteDefiner();
+        $routerBuilder = new RouterBuilder();
 
-        $router = new Router($routeDefiner->getRoutes());
+        $router = $routerBuilder
+            ->setRoutesCollection(new ApiRouteDefiner())
+            ->setUriMatchValidator(new DefaultUriMatchValidator())
+            ->build();
 
-        $router->executeRoute();
+        echo $router->executeRoute();
     } // run.
 } // WebApplication.
