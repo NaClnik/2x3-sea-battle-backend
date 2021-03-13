@@ -26,35 +26,19 @@ class Router
     #region Аксессоры класса
     // Аксессоры класса.
     /**
-     * @return mixed|string
+     * @return Route
      */
-    public function getRequestUri()
+    public function getRequestRoute(): Route
     {
-        return $this->requestUri;
+        return $this->requestRoute;
     }
 
     /**
-     * @param mixed|string $requestUri
+     * @param Route $requestRoute
      */
-    public function setRequestUri($requestUri): void
+    public function setRequestRoute(Route $requestRoute): void
     {
-        $this->requestUri = $requestUri;
-    }
-
-    /**
-     * @return mixed|string
-     */
-    public function getRequestMethod()
-    {
-        return $this->requestMethod;
-    }
-
-    /**
-     * @param mixed|string $requestMethod
-     */
-    public function setRequestMethod($requestMethod): void
-    {
-        $this->requestMethod = $requestMethod;
+        $this->requestRoute = $requestRoute;
     }
 
     /**
@@ -91,37 +75,31 @@ class Router
     #endregion
 
     // Методы класса.
-    // TODO: Подумать над декомпозицией этого метода.
+    // Метод для исполнения метода контроллера, к которому привязан маршрут.
     public function executeRoute()
     {
-        $routesCollection = $this->routesCollection->getRoutes();
+        // Получить совпадающий маршрут.
+        $matchedRoute = $this->getMatchedRoute();
 
-        // TODO: Сделать регулярку для точного сопоставления маршрута.
-        // На данный момент если ввести в адресной строке маршрут:
-        //            !! OK !!
-        // Адресная строка:   /test/index
-        // Определён маршрут: /test/index
-        //
-        //            !! NO !!
-        // Адресная строка:   /test/index/
-        // Определён маршрут: /test/index
-        $route = array_filter($routesCollection, function (RouteWithController $route){
-            //return $route->getRoute() == $this->requestUri;
-//            return $route->getRoute() == $this->requestUri && $route->getMethod() == $this->requestMethod;
-        })[0]; // array_filter.
-
+        // Создать хэндлер для рефлексии.
         $reflectionHandler = new ReflectionHandler();
 
-        return $reflectionHandler->getDataFromController($route->getControllerName(), $route->getActionName());
+        // Получить данные из метода контроллера, связанного с маршрутом.
+        return $reflectionHandler->getDataFromController($matchedRoute->getControllerName(), $matchedRoute->getActionName());
     } // executeRoute.
 
-    private function getMatchedRoute()
+    // Получить маршрут, который совпадает с определённым маршрутом в ApiRouteDefiner.
+    private function getMatchedRoute(): Route
     {
+        // Получить все роуты, определённые в ApiRouteDefiner.
         $routesCollection = $this->routesCollection->getRoutes();
 
-        $route = array_filter($routesCollection, function (RouteWithController $route){
-            //$this->uriMatchValidator->match()
-            // return $route->getRoute() == $this->requestUri;
-        })[0]; // array_filter.
+        // Получить массив с совпадающими маршрутами.
+        $data = array_filter($routesCollection, function (Route $route){
+            return $this->uriMatchValidator->match($this->requestRoute, $route);
+        });
+
+        // Вернуть первый элемент из массива.
+        return array_values($data)[0];
     } // getMatchedRoute.
 } // Router.
