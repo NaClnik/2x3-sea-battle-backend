@@ -4,10 +4,13 @@
 namespace Core\Bootstrap;
 
 
+use Core\Routing\Router;
+use Core\Routing\RoutesCollection;
+
 class WebApplication
 {
     // Методы класса.
     public function run(): void{
-        echo $_SERVER['REQUEST_URI'];
+        $router = new Router(new RoutesCollection());
     } // run.
 } // WebApplication.
