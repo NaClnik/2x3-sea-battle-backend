@@ -39,6 +39,6 @@ class Router
 
         $reflectionHandler = new ReflectionHandler();
 
-        //$reflectionHandler->getDataFromController($route);
+        $reflectionHandler->getDataFromController($route->getControllerName(), $route->getActionName());
     } // executeRoute.
 } // Router.
