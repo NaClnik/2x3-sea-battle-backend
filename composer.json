@@ -1,0 +1,19 @@
+{
+    "name": "naclnik/sea-battle-backend",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Daniil Dzevelyuk",
+            "email": "danycall19@gmail.com"
+        }
+    ],
+    "require": {},
+    "description": "sea-battle project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Core\\": "core/"
+        }
+    }
+}
+
