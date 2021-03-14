@@ -6,6 +6,7 @@ namespace Core\Base\Abstracts;
 
 
 use Core\Collections\ExceptionHandlersCollection;
+use Core\Exceptions\RouteNotFoundException;
 use Core\Models\ExceptionHandlerValuePair;
 use Core\Reflection\ExceptionsReflectionHandler;
 use Exception;
@@ -14,12 +15,13 @@ use Exception;
 abstract class CoreExceptionsHandler
 {
     // Поля класса.
-    private ExceptionHandlersCollection $exceptionHandlersCollection;
+    protected ExceptionHandlersCollection $exceptionHandlersCollection;
 
     // Конструктор.
     public function __construct()
     {
         $this->exceptionHandlersCollection = new ExceptionHandlersCollection();
+        $this->register();
     } // __construct.
 
     // Методы класса.
@@ -27,7 +29,7 @@ abstract class CoreExceptionsHandler
     {
         $callback = $this->exceptionHandlersCollection->getValueByKey($className);
 
-        $callback($exception);
+        $callback->__invoke($exception);
     } // handle.
 
     public function registerException($callback): void
@@ -36,7 +38,9 @@ abstract class CoreExceptionsHandler
 
         $typeException = $exceptionsReflectionHandler->getTypeExceptionFromMethod($callback);
 
-        $this->exceptionHandlersCollection->push(new ExceptionHandlerValuePair($typeException, $callback));
+        $valuePair = new ExceptionHandlerValuePair($typeException, $callback);
+
+        $this->exceptionHandlersCollection->push($valuePair);
     } // registerException.
 
     // Абстрактные методы класса.

@@ -22,7 +22,7 @@ class ExceptionHandlersCollection implements ICollection
     // Методы класса.
     public function push($value): ExceptionHandlersCollection
     {
-        array_push($collection, $value);
+        array_push($this->collection, $value);
 
         return $this;
     } // push.
@@ -30,6 +30,15 @@ class ExceptionHandlersCollection implements ICollection
     // TODO: Обработать ситуацию, если ключ не найден.
     public function getValueByKey($key)
     {
-        return $this->collection[$key];
+        $value = null;
+
+        foreach ($this->collection as $item){
+            if($item->getType() == $key){
+                $value = $item->getHandler();
+                break;
+            } // if.
+        } // foreach.
+
+        return $value;
     } // getValueByKey.
 } // ExceptionHandlersCollection.
