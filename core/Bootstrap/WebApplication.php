@@ -7,6 +7,7 @@ namespace Core\Bootstrap;
 use App\Exceptions\ExceptionsHandler;
 use App\Routes\ApiRouteDefiner;
 use Core\Defaults\DefaultUriMatchValidator;
+use Core\Exceptions\RouteNotFoundException;
 use Core\Routing\RouterBuilder;
 use Exception;
 

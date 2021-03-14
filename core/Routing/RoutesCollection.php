@@ -4,9 +4,11 @@
 namespace Core\Routing;
 
 
-// Класс для определения маршрутов приложения.
 use Core\Models\RouteWithController;
 
+// TODO: Переместить класс в папку core/Collections и изменить namespace на Core\Collections.
+// TODO: Возможно не стоит перемещать...
+// Класс для определения маршрутов приложения.
 class RoutesCollection
 {
     // Поля класса.
