@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Core\Interfaces;
+namespace Core\Base\Interfaces;
 
 
 use Core\Models\Route;

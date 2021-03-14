@@ -4,9 +4,11 @@
 namespace Core\Bootstrap;
 
 
+use App\Exceptions\ExceptionsHandler;
 use App\Routes\ApiRouteDefiner;
 use Core\Defaults\DefaultUriMatchValidator;
 use Core\Routing\RouterBuilder;
+use Exception;
 
 class WebApplication
 {
@@ -19,6 +21,12 @@ class WebApplication
             ->setUriMatchValidator(new DefaultUriMatchValidator())
             ->build();
 
-        echo $router->executeRoute();
+        try {
+            echo $router->executeRoute();
+        } catch (Exception $exception) {
+            $exceptionHandler = new ExceptionsHandler();
+
+            $exceptionHandler->handle(get_class($exception), $exception);
+        } // catch.
     } // run.
 } // WebApplication.

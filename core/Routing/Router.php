@@ -2,8 +2,9 @@
 
 namespace Core\Routing;
 
+use Core\Base\Interfaces\IUriMatchValidator;
 use Core\Defaults\DefaultUriMatchValidator;
-use Core\Interfaces\IUriMatchValidator;
+use Core\Exceptions\RouteNotFoundException;
 use Core\Models\Route;
 use Core\Models\RouteWithController;
 use Core\Reflection\ReflectionHandler;
@@ -85,7 +86,10 @@ class Router
         $reflectionHandler = new ReflectionHandler();
 
         // Получить данные из метода контроллера, связанного с маршрутом.
-        return $reflectionHandler->getDataFromController($matchedRoute->getControllerName(), $matchedRoute->getActionName());
+        return $reflectionHandler->getDataFromController(
+            $matchedRoute->getControllerName(), $matchedRoute->getActionName(),
+            $this->requestRoute->getRoute(), $matchedRoute->getRoute()
+        );
     } // executeRoute.
 
     // Получить маршрут, который совпадает с определённым маршрутом в ApiRouteDefiner.
@@ -98,6 +102,12 @@ class Router
         $data = array_filter($routesCollection, function (Route $route){
             return $this->uriMatchValidator->match($this->requestRoute, $route);
         });
+
+        $foundRoute = array_values($data)[0];
+
+        if (!array_values($data)[0]){
+            throw new RouteNotFoundException();
+        } // if.
 
         // Вернуть первый элемент из массива.
         return array_values($data)[0];

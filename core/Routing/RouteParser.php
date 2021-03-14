@@ -15,16 +15,22 @@ class RouteParser
         return array_values($temp);
     } // parse.
 
-    public function getValuesFromPattern(string $uri, string $pattern): array {
-        $segments = $this->parse($uri);
+    public function getValuesFromPattern(string $requestUri, string $definedUri, string $pattern): array {
+        $requestUriSegments = $this->parse($requestUri);
+        $definedUriSegments = $this->parse($definedUri);
 
         $values = [];
 
-        foreach ($segments as $segment){
-            if(preg_match($pattern, $segment)){
-                array_push($values, $segment);
+        $countSegments = count($requestUriSegments);
+
+        for ($i = 0; $i < $countSegments; $i++){
+            $currentRequestUriSegment = $requestUriSegments[$i];
+            $currentDefinedUriSegment = $definedUriSegments[$i];
+
+            if(preg_match($pattern, $currentDefinedUriSegment)){
+                array_push($values, $currentRequestUriSegment);
             } // if.
-        } // foreach.
+        } // for.
 
         return $values;
     } // getValuesFromPatterns.

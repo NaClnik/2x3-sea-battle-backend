@@ -2,7 +2,7 @@
 
 namespace Core\Defaults;
 
-use Core\Interfaces\IUriMatchValidator;
+use Core\Base\Interfaces\IUriMatchValidator;
 use Core\Models\Route;
 use Core\Routing\RouteParser;
 

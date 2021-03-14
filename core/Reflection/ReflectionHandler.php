@@ -13,7 +13,7 @@ class ReflectionHandler
 {
     // TODO: Сделать обработку исключений.
     // TODO: Сделать декомпозицию метода.
-    public function getDataFromController(string $controllerName, string $actionName)
+    public function getDataFromController(string $controllerName, string $actionName, string $requestUri, string $definedUri)
     {
         // Получаем класс для рефлексии.
         $reflectionController = new ReflectionClass($controllerName);
@@ -22,17 +22,18 @@ class ReflectionHandler
 
         $reflectionAction = $reflectionController->getMethod($actionName);
 
-        return $reflectionAction->invoke($controller);
+        $actionArguments = $this->getArgumentsForMethodFromUri($reflectionAction, $requestUri, $definedUri);
+
+        return $reflectionAction->invokeArgs($controller, $actionArguments); //->invoke($controller);
     } // getDataFromController.
 
-    // TODO: Подумать над переименованием метода.
-    public function getArgumentsForMethodFromRoute(ReflectionMethod $reflectionMethod, Route $route, array $patterns): array
+    // TODO: Сделать проверку на соответствие полученных аргументов параметрам метода.
+    public function getArgumentsForMethodFromUri(ReflectionMethod $reflectionMethod, string $requestUri, string $definedUri): array
     {
-//        $routeParser = new RouteParser($route->getRoute());
-//
-//        $routeParser->parse();
+        $routeParser = new RouteParser();
 
-        return [];
+        // TODO: Вынести паттерн регулярки в отдельный конфиг файл.
+        return $routeParser->getValuesFromPattern($requestUri, $definedUri, '/{[^\/]+}/');
     } // getArgumentsForMethodFromRoute.
 
     // Рекурсивный метод для Dependency Injection в контроллерах.

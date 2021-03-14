@@ -5,10 +5,11 @@ namespace Core\Routing;
 
 
 
-use Core\Abstracts\RouteDefiner;
-use Core\Interfaces\IUriMatchValidator;
 
 // Строитель для Router (Паттерн FluentBuilder).
+use Core\Base\Abstracts\RouteDefiner;
+use Core\Base\Interfaces\IUriMatchValidator;
+
 class RouterBuilder
 {
     // Поля класса.

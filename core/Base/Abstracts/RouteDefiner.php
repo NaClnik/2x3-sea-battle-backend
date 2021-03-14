@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Core\Abstracts;
+namespace Core\Base\Abstracts;
 
 
 use Core\Routing\RoutesCollection;
