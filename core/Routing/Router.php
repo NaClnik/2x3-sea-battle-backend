@@ -82,7 +82,7 @@ class Router
         $matchedRoute = $this->getMatchedRoute();
 
         // Создать хэндлер для рефлексии.
-        $reflectionHandler = new ReflectionHandler($matchedRoute);
+        $reflectionHandler = new ReflectionHandler();
 
         // Получить данные из метода контроллера, связанного с маршрутом.
         return $reflectionHandler->getDataFromController($matchedRoute->getControllerName(), $matchedRoute->getActionName());

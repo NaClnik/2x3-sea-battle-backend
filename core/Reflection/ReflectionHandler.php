@@ -5,20 +5,12 @@ namespace Core\Reflection;
 
 // TODO: Подумать над переименованием класса.
 use Core\Models\Route;
+use Core\Routing\RouteParser;
 use ReflectionClass;
 use ReflectionMethod;
 
 class ReflectionHandler
 {
-    // Поля класса.
-    private Route $route;
-
-    // Конструктор.
-    public function __construct(Route $route)
-    {
-        $this->route = $route;
-    } // __construct.
-
     // TODO: Сделать обработку исключений.
     // TODO: Сделать декомпозицию метода.
     public function getDataFromController(string $controllerName, string $actionName)
@@ -34,9 +26,12 @@ class ReflectionHandler
     } // getDataFromController.
 
     // TODO: Подумать над переименованием метода.
-    public function getArgumentsForMethodFromRoute(ReflectionMethod $reflectionMethod): array
+    public function getArgumentsForMethodFromRoute(ReflectionMethod $reflectionMethod, Route $route, array $patterns): array
     {
-        // TODO: Реализовать метод.
+//        $routeParser = new RouteParser($route->getRoute());
+//
+//        $routeParser->parse();
+
         return [];
     } // getArgumentsForMethodFromRoute.
 
